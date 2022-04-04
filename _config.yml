@@ -1,3 +1,4 @@
 theme: jekyll-theme-architect
 title: Cloud Rider
 description: Assemblage of topics for the cloud rider's woolgathering
+permalink: /blog/:year/:month/:day/:title

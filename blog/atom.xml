@@ -1,0 +1,22 @@
+---
+layout: feed
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+	<title>Cloud Rider's Blog</title>
+	<link href="http://nauticalmike.github.io/blog/atom.xml" rel="self"/>
+	<link href="http://nauticalmike.github.io/blog"/>
+	<updated>{{ site.time | date_to_xmlschema }}</updated>
+	<id>http://nauticalmike.github.io/blog</id>
+	<author>
+		<name>nauticalmike</name>
+		<!-- <email>@gmail.com</email> -->
+	</author>
+
+	{% for post in site.posts %}
+		<entry>
+			<title>{{ post.title }}</title>
+			<link href="http://nauticalmike.github.io{{ post.url }}"/>
+			<updated>{{ post.date | date_to_xmlschema }}</updated>
+	
