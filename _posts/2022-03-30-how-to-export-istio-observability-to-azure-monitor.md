@@ -15,13 +15,13 @@ In this hands-on writeup we can explore the following observability concerns whe
 
 Azure monitor comprises under one roof observability concerns like distributed tracing, logging, metrics and dashboards for their service offerings like AKS. There are API's and instrumentations ready for different common languages, but how does this align with Istio? Lets explore deeper how can we port these concerns to using Azure Monitor and Application Insights.
 
-![](../images/azure-monitor-app-insights-traces.png)
+![](../assets/images/azure-monitor-app-insights-traces.png)
 
 ***
 
 ## What is Kiali? => Istio's console
 
-![](../images/kiali-app.png)
+![](../assets/images/kiali-app.png)
 
 Kiali is the management console for Istio service mesh, it could be installed as an add-on and it could be a trusted part of your production environment. 
 
@@ -101,7 +101,7 @@ In addition to applying this resource, you need to make sure the `istio` ConfigM
 
 You can accomplish this by adding it to the ConfigMap:
 
-![](../images/istio-cm.png)
+![](../assets/images/istio-cm.png)
 
 You can also add the config when using the Istio Operator:
 
@@ -161,7 +161,7 @@ ContainerLog
 
 You should expect to see something similar to this:
 
-![](../images/access-logging.png)
+![](../assets/images/access-logging.png)
 
 ***
 NOTE:
@@ -245,7 +245,7 @@ kubectl get pods -n kube-system | grep oms
 
 You should see a ReplicaSet with the name `omsagent` running:
 
-![](../images/omsagent-pod.png)
+![](../assets/images/omsagent-pod.png)
 
 ***
 NOTE: If you don't see the pod, probably Monitor is not enabled on your AKS cluster, follow this [article](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-onboard) to set it up.
@@ -331,7 +331,7 @@ NOTE: The `istio_requests_total` is the same Istio metric we used on the previou
 
 You should be able to see the same metrics for `istio_requests_total` observed previously on Prometheus or when scraping the `sleep` or `hello-world` services:
 
-![](../images/prometheus-metrics.png)
+![](../assets/images/prometheus-metrics.png)
 
 Notice all the metrics collected from all the workloads on the cluster using the "prometheus-style" annotations. These should include the `sleep`, `hello-world` workloads as well as the Istio's `ingressgateway`. 
 
@@ -387,7 +387,7 @@ Take a look at the file named `otel-config.yaml` where we have three k8s resourc
 
 Note that there is an `instrumentation_key` property used on the ConfigMap, you can add your own key from the Overview section on your Application Insights:
 
-![](../images/azure-monitor-app-insights-instrumentation-key.png)
+![](../assets/images/azure-monitor-app-insights-instrumentation-key.png)
 
 You can also validate with the following command if `application-insights` extension was added to your AKS cluster:
 
@@ -570,5 +570,5 @@ If the instrumentation were to work according to the Azure telemetry API, then t
 Application Insights -> Logs -> query -> traces
 ```
 
-![](../images/azure-monitor-app-insights-traces.png)
+![](../assets/images/azure-monitor-app-insights-traces.png)
 

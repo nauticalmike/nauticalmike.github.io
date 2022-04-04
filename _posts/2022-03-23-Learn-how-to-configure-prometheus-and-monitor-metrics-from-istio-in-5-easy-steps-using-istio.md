@@ -141,7 +141,7 @@ istioctl dashboard prometheus
 
 You should expect your terminal to open a new browser window with the Prometheus UI:
 
-![](../images/prometheus-ui.png)
+![](../assets/images/prometheus-ui.png)
 
 ### 5. Explore metrics over Prometheus UI using PromQL
 
@@ -187,10 +187,10 @@ istio_requests_total{response_code="200"}
 
 Expect a similar output to this:
 
-![](../images/prometheus-istioreq.png)
+![](../assets/images/prometheus-istioreq.png)
 
 Switch to the graph view and change the time span to 15m, you should see something similar to this:
 
-![](../images/prometheus-istioreq-graph.png)
+![](../assets/images/prometheus-istioreq-graph.png)
 
 ***Congratulations! you have configured Prometheus and monitor metrics in 5 easy steps using Istio's out of the box observability capabilities***
