@@ -58,7 +58,7 @@ plugins:
 author:
   name   : "Michael Ac. a.k.a NauticalMike"
   avatar : "/assets/images/profilePic.jpeg"
-  bio    : "This page is just an assemblage of topics for the cloud rider's woolgathering."
+  bio    : "This page is just an assemblage of topics for the cloud rider's woolgathering. I'm a Solution Architect at Tetrate.io focused on solving enterprise wide networking, automation and development challenges using open source technologies with emphasis on service mesh and application development."
   links:
     - label: "Website"
       icon: "fas fa-fw fa-link"

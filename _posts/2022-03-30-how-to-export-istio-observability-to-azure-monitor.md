@@ -1,4 +1,20 @@
-# How to export Istio's Observability concerns to Azure Monitor
+---
+title: "How to export Istio's Observability concerns to Azure Monitor"
+last_modified_at: 2022-03-30T16:20:02-05:00
+categories:
+  - Blog
+tags:
+  - azure
+  - monitor
+  - istio
+  - observability
+  - metrics
+  - prometheus
+  - tracing
+  - grafana
+  - zipkin
+  - logs
+---
 
 What happens when we need to replace Istio's self-hosted observability tools with something like Azure Monitor? 
 In this hands-on writeup we can explore the following observability concerns when needing to export them to Azure Monitor:

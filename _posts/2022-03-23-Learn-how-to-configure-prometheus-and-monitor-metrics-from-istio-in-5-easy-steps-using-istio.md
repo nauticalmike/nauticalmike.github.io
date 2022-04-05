@@ -1,4 +1,14 @@
-# Learn how to configure Prometheus and monitor metrics in 5 easy steps using Istio
+---
+title: "Learn how to configure Prometheus and monitor metrics in 5 easy steps using Istio"
+last_modified_at: 2022-03-23T16:20:02-05:00
+categories:
+  - Blog
+tags:
+  - prometheus
+  - istio
+  - observability
+  - metrics
+---
 
 More often than not configuring workload metrics is just ignored, and there is a fundamental reason why... we just want to stick to the business functionality we are trying to implement and we likely just see metrics on a lower priority, it is because it takes time to implement the instrumentations needed in our app to expose the metrics. 
 
