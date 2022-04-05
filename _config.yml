@@ -56,9 +56,9 @@ plugins:
   - jekyll-include-cache
 
 author:
-  name   : "First Lastname"
+  name   : "Michael Ac. a.k.a NauticalMike"
   avatar : "/assets/images/profilePic.jpeg"
-  bio    : "My awesome biography constrained to a sentence or two goes here."
+  bio    : "This page is just an assemblage of topics for the cloud rider's woolgathering."
   links:
     - label: "Website"
       icon: "fas fa-fw fa-link"
