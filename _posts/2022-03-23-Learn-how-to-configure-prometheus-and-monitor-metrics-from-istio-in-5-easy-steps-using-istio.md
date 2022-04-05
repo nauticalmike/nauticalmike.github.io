@@ -1,6 +1,7 @@
 ---
 title: "Learn how to configure Prometheus and monitor metrics in 5 easy steps using Istio"
 last_modified_at: 2022-03-23T16:20:02-05:00
+classes: wide
 categories:
   - Blog
 tags:

@@ -1,6 +1,7 @@
 ---
 title: "How to export Istio's Observability concerns to Azure Monitor"
 last_modified_at: 2022-03-30T16:20:02-05:00
+classes: wide
 categories:
   - Blog
 tags:
