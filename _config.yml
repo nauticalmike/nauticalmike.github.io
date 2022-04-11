@@ -21,7 +21,6 @@ twitter_username: nauticalmike
 github_username: nauticalmike
 minimal_mistakes_skin: default
 search: true
-show_date: true
 
 # Build settings
 markdown: kramdown
@@ -98,6 +97,7 @@ defaults:
       comments: true
       share: true
       related: true
+      show_date: true
   # _pages
   - scope:
       path: "_pages"
