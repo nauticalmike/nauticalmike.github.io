@@ -533,6 +533,7 @@ kubectl apply -f external-yahoo.yaml -n istio-system
 
 ***
 NOTE: This time we are applying all these resources on the `istio-system` namespace where the egress gateway instance resides. This is with the intention to easily manage egress traffic where the egress gateway instance resides, facilitating the management of the `AuthorizationPolicy`s.  
+
 ***
 
 Access `developers.google.com`:
