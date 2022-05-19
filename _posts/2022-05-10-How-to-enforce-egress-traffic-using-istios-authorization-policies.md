@@ -614,6 +614,17 @@ Expect 200 responses from either `sleep` service.
 
 Although we can enforce denying external access by removing `ServiceEntry` resources while the `REGISTRY_ONLY` mode is active, we can also do it with a more fine-grained control using `AuthorizationPolicy`s after the correct configuration is in place.
 
+Take a look at this policy that allows no traffic out:
+```yaml
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+ name: allow-nothing
+ namespace: istio-system
+spec:
+  {}
+```
+
 Apply the `authz-policy-allow-nothing.yaml` file that enforces this purpose:
 ```bash
 kubectl apply -f authz-policy-allow-nothing.yaml
@@ -651,7 +662,45 @@ kubectl delete authorizationpolicies.security.istio.io -n istio-system allow-not
 
 ### Enforce policies per namespace
 
-This use case allows the `sleep` service on the `default` namespace to access google but not yahoo and the for the `sleep` service on the `otherns` namespace it allows yahoo but not google.
+For this use case we allow the `sleep` service on the `default` namespace to access `google` but not `yahoo` and the for the `sleep` service on the `otherns` namespace it allows `yahoo` but not `google`.
+
+Analyze the following policies:
+```yaml
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: external-deny-developers-google-com
+  # No ns means that applies to all ns in a mesh
+spec:
+  # allow-list for the identities that can call the host
+  action: DENY
+  rules:
+  - from:
+    - source:
+        namespaces: ["otherns"]
+    to:
+    - operation:
+        hosts:
+        - developers.google.com
+```
+```yaml
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: external-deny-developer-yahoo-com
+  # No ns means that applies to all ns in a mesh
+spec:
+  # allow-list for the identities that can call the host
+  action: DENY
+  rules:
+  - from:
+    - source:
+        namespaces: ["default"]
+    to:
+    - operation:
+        hosts:
+        - developer.yahoo.com
+```
 
 Apply the following policies:
 ```bash
@@ -681,10 +730,12 @@ kubectl delete authorizationpolicies.security.istio.io -n istio-system external-
 
 ### Enforce policies per workload using service account principals
 
-For this use case deploy another set of `sleep` services on the `otherns` namespace:
+Using account principals provides the fine-grained control we need per workload within a namespace. For this use case deploy another set of `sleep` services on the `otherns` namespace:
 ```bash
 kubectl apply -f sleep-custom.yaml -n otherns
 ``` 
+
+The yaml file above is the traditional `sleep` service with custom names, see [here](https://github.com/nauticalmike/egress-security/blob/main/sleep-custom.yaml).
 
 This would create two new `sleep-google` and `sleep-yahoo` services besides the existing one. Save the pods names:
 ```bash
@@ -692,7 +743,45 @@ export SLEEP_POD_G=$(kubectl get pod -n otherns -l app=sleep-google -ojsonpath='
 export SLEEP_POD_Y=$(kubectl get pod -n otherns -l app=sleep-yahoo -ojsonpath='{.items[0].metadata.name}')
 ```
 
-Apply the following policies that block the `sleep-google` service to access Yahoo and `sleep-yahoo` service to access Google within the `otherns` namespace still leaving access to both from the `sleep` service:
+Apply the following policies that block the `sleep-google` service to access Yahoo and `sleep-yahoo` service to access Google within the `otherns` namespace, still leaving access to both hosts from the `sleep` service:
+```yaml
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: external-deny-developers-google-com
+  # No ns means that applies to all ns in a mesh
+spec:
+  # allow-list for the identities that can call the host
+  action: DENY
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/otherns/sa/sleep-yahoo"]
+    to:
+    - operation:
+        hosts:
+        - developers.google.com
+
+```
+```yaml
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: external-deny-developer-yahoo-com
+  # No ns means that applies to all ns in a mesh
+spec:
+  # allow-list for the identities that can call the host
+  action: DENY
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/otherns/sa/sleep-google"]
+    to:
+    - operation:
+        hosts:
+        - developer.yahoo.com
+```
+
 ```bash
 kubectl apply -f authz-policy-deny-google-custom.yaml -n istio-system 
 kubectl apply -f authz-policy-deny-yahoo-custom.yaml -n istio-system
@@ -711,5 +800,10 @@ kubectl exec $SLEEP_POD2 -n otherns -it -- curl -I http://developer.yahoo.com
 The second and third responses should be 403 forbidden as they are from `sleep-google` to Yahoo and the third from `sleep-yahoo` to Google while the rest should be 200.
 
 You successfully used `AuthorizationPolicy`s to enforce internal outbound traffic through the egress gateway.
+
+
+# Summary
+
+Using the right combination of `ServiceEntry`s, `DestinationRule`s, `VirtualService`s, `Gateway`s and `AuthorizationPolicy` allows to flow internal outbound traffic to our egress gateway instance with the purpose to fine-grained control the workloads outbound traffic.
 
 The files for this article can be found [here](https://github.com/nauticalmike/egress-security).
