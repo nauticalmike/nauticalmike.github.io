@@ -162,6 +162,7 @@ The error is due to the new policy enforcing only services part of the registry 
 
 ***
 NOTE: There could be a slight delay on the configuration being propagated to the sidecars where the still allow access to the external services.
+
 ***
 
 ### Add the Google and Yahoo services to the mesh service registry
