@@ -584,6 +584,7 @@ Expect and entry from the egress to the external host:
 
 ***
 NOTE: Notice how the internal outbound traffic is intentionally originated using `http` in order to rely on Istio's automatic mTLS within the mesh and then using the `DestinationRule` tls mode `SIMPLE`, the egress instance does a secure request to the external host.
+
 ***
 
 Repeat the same steps using the `sleep` service on the `otherns` for the Yahoo host:
