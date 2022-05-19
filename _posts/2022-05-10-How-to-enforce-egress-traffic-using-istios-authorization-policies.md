@@ -612,7 +612,7 @@ Expect 200 responses from either `sleep` service.
 
 ### Enforce authorization polices
 
-Although we can enforce denying access by removing `ServiceEntry` resources we can also do it with `AuthorizationPolicy`s after the correct configuration is in place.
+Although we can enforce denying external access by removing `ServiceEntry` resources while the `REGISTRY_ONLY` mode is active, we can also do it with a more fine-grained control using `AuthorizationPolicy`s after the correct configuration is in place.
 
 Apply the `authz-policy-allow-nothing.yaml` file that enforces this purpose:
 ```bash
@@ -629,6 +629,7 @@ kubectl exec $SLEEP_POD2 -n otherns -it -- curl -I http://developer.yahoo.com
 
 ***
 NOTE: Keep in mind some requests could be allowed while the configuration takes place
+
 ***
 
 Expect a response along the lines:
