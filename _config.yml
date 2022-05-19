@@ -82,7 +82,7 @@ footer:
       icon: "fab fa-fw fa-github"
       url: "https://github.com/nauticalmike"
     - label: "Linkedin"
-      icon: "fa fa-linkedin"
+      icon: "fa-brands fa-linkedin"
       url: "https://www.linkedin.com/in/michaelacostamadiedo/"
 
 defaults:
